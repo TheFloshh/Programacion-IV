@@ -313,7 +313,14 @@ public class registroUsuario extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         
         usuarioDAO objUsu = new usuarioDAO();
-        objUsu.getConexionBD();
+        String ident =this.txtId.getText();
+        String nom = this.txtName.getText();
+        String apel = this.txtLastName.getText();
+        String cor = this.txtCorreo.getText();
+        String usu = this.txtUsuario.getText();
+        char[] c = this.txtContrasena.getPassword();
+        String pwd = new String(c);
+        objUsu.registrarUsuario(ident, nom, apel, cor, usu, pwd);
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
 

@@ -6,6 +6,7 @@ package taller1;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.sql.SQLException;
  */
 public class usuarioDAO {
     
-    public static void getConexionBD(){
+    public static Connection getConexionBD(){
         
         Connection c = null;
         String host = "localhost";
@@ -44,7 +45,32 @@ public class usuarioDAO {
         catch(SQLException ex){    
             System.out.println("Error en la conexion. " + ex);
         }
-        
+        return c;
     }   
     
+    public void registrarUsuario(String ident, String nom, String apel, String cor, String usu, String pwd){
+        
+        String sql = "INSERT INTO tblusuario (identificacion, nombres, apellidos, correo, usuario, contrasena) VALUES (?,?,?,?,?,?)";
+
+        try {
+             Connection conn = getConexionBD();
+             PreparedStatement pstmt = conn.prepareStatement(sql); 
+
+            pstmt.setString(1, ident);
+            pstmt.setString(2, nom);
+            pstmt.setString(3, apel);
+            pstmt.setString(4, cor);
+            pstmt.setString(5, usu);
+            pstmt.setString(6, pwd);
+
+            int filasInsertadas = pstmt.executeUpdate();
+            if (filasInsertadas > 0) {
+                System.out.println("Un nuevo usuario fue insertado exitosamente.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el usuario: " + e.getMessage());
+        }
+        
+    }
 }
